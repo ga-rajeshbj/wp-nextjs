@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const login = () => {
   const [userName, setUserName] = useState("");
@@ -14,9 +15,11 @@ const login = () => {
     const response = await signIn("wpLogin", {
       userName,
       password,
-      redirect: false,
+      redirect: true,
+      callbackUrl: `${window.location.origin}`,
     });
     console.log(response);
+
     if (response.error) {
       alert(response.error);
     }
